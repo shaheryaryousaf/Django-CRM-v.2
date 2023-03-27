@@ -1,0 +1,103 @@
+{% extends "base.html" %}{% block content %}
+<section class="content pt-5">
+  <div class="container">
+    <div class="row">
+      {% for message in messages %}
+      <div class="col-md-12">
+        <div
+          class="mt-3 alert alert-warning alert-dismissible fade show"
+          role="alert"
+          id="alert"
+        >
+          {{message}}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+            style="height: 15px"
+          ></button>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- Products List -->
+      <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h2 class="mb-1">Products</h2>
+            <p class="text-secondary">
+              <small>You can see list of all products here</small>
+            </p>
+          </div>
+          <a class="btn btn-primary btn-sm" href="{% url 'add-product' %}"
+            >Add New Product</a
+          >
+        </div>
+        <form>
+          <h5>Filters</h5>
+          <div class="row g-3">
+            <div class="col">
+              <select class="form-control">
+                <option>-- Select Product --</option>
+                <option>Product 1</option>
+                <option>Product 2</option>
+                <option>Product 3</option>
+              </select>
+            </div>
+            <div class="col">
+              <select class="form-control">
+                <option>-- Select Status --</option>
+                <option>Pending</option>
+                <option>Out for Delivery</option>
+                <option>Delivered</option>
+              </select>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary">Search</button>
+            </div>
+          </div>
+        </form>
+        <table class="table custom_table mt-3">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <td>{{product.title}}</td>
+              <td>{{product.category}}</td>
+              <td>
+                <a href="{% url 'edit-product' product.id %}"
+                  ><i class="fa-solid fa-pencil"></i></a
+                >&nbsp;&nbsp;
+                <a href="#"><i class="fa-solid fa-trash"></i></a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+              <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body{
+    font-family: 'Inter', sans-serif;
+    background-color: #F8F9FA;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* Buttons and Input Fields */
+.form-control,
+.form-select {
+  padding: 10px !important;
+  font-size: 15px !important;
+  border-radius: 5px !important;
+  border-color: #ececec !important;
+}
+
+.btn-primary,
+.btn-success {
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.btn-sm{
+    padding: 6px 12px !important;
+}
+
+label{
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+/* Header */
+header .navbar{
+    padding: 15px 0;
+}
+
+header a{
+    font-size: 15px;
+    color: white !important;
+}
+
+/* Cards */
+.card{
+    box-shadow: 0 0 8px 6px rgba(0,0,0,.02)!important;
+    border: none;
+}
+
+.card h1{
+    margin-bottom: 0;
+}
+
+/* Table */
+.custom_table{
+    border: 1px solid #ececec;
+}
+
+.custom_table thead{
+    background-color: #ececec;
+}
+
+.custom_table tr{
+    cursor: pointer;
+}
+
+.custom_table th{
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.custom_table td{
+    font-size: 14px;
+    padding: 10px;
+    background-color: white;
+}
+
+.custom_table .fa-solid{
+    color: gray;
+}
+
+.pagination a{
+    font-size: 14px;
+}

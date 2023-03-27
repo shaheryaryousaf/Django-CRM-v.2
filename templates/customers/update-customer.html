@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block content %}{% load crispy_forms_tags %}
+<section class="content pt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div>
+            <h3 class="mb-1">Update Customer</h3>
+            <p class="text-secondary">
+              <small>You can udpate customer from here</small>
+            </p>
+          </div>
+          <form method="POST">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button class="btn btn-primary" type="submit">Update Customer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
