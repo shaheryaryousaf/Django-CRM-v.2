@@ -1,0 +1,41 @@
+{% extends "base.html" %}{% block content %}{% load crispy_forms_tags %}
+<section class="content pt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+            <div class="card p-2">
+                <div class="card-body">
+                    <h4>Create Category</h4>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <button class="btn btn-primary">Add Category</button>
+                    </form>
+                </div>
+              </div>
+            
+        </div>
+        <div class="col-md-8">
+            <h4>Categories List</h4>
+          <table class="table custom_table mt-3">
+            <thead>
+                <tr>
+                    <th style="width:75%">Title</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td>{{category.title}}</td>
+                    <td><a href="{% url 'delete-category' category.id %}"><i class="fa-solid fa-trash"></i></td></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

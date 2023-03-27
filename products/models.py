@@ -23,7 +23,7 @@ class Category(models.Model):
 # Products Model
 class Product(models.Model):
     title = models.CharField(max_length=255, null=True)
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(
         null=True, blank=True, default=datetime.now)
@@ -40,8 +40,8 @@ class Product(models.Model):
 
 # Orders Model
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=20, choices=STATUS, default='Unassigned', null=True)
     created_at = models.DateTimeField(
         null=True, blank=True, default=datetime.now)

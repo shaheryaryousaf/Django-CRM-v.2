@@ -19,7 +19,6 @@
           </div>
         </div>
       </div>
-
       <!-- Customer Orders -->
       <div class="col-md-8">
         <h2 class="mb-1">Total Orders: 10</h2>
@@ -51,103 +50,29 @@
           <thead>
             <tr>
               <th>Product</th>
-              <th>Category</th>
               <th>Status</th>
               <th>Date</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
+            {% if orders %}
+            {% for order in orders %}
             <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
+              <td>{{order.product.title}}</td>
+              <td>{{order.status}}</td>
+              <td>{{order.created_at}}</td>
               <td>
-                <a href="create-order.html"><i class="fa-solid fa-eye"></i></a> &nbsp;
-                <a href="#"><i class="fa-solid fa-trash"></i></a>
+                <a href="{% url 'order-detail' order.id %}"><i class="fa-solid fa-eye"></i></a> &nbsp;
+                <a href="{% url 'delete-order' order.id %}"><i class="fa-solid fa-trash"></i></a>
               </td>
             </tr>
+            {% endfor %}
+            {% else %}
             <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
-              <td>
-                <a href="create-order.html">Update</a> -
-                <a href="#">Delete</a>
-              </td>
+              <td colspan="5">No orders for <b>{{customer.first_name}} {{customer.last_name}}</b> right now.</td>
             </tr>
-            <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
-              <td>
-                <a href="create-order.html">Update</a> -
-                <a href="#">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
-              <td>
-                <a href="create-order.html">Update</a> -
-                <a href="#">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
-              <td>
-                <a href="create-order.html">Update</a> -
-                <a href="#">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
-              <td>
-                <a href="create-order.html">Update</a> -
-                <a href="#">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
-              <td>
-                <a href="create-order.html">Update</a> -
-                <a href="#">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
-              <td>
-                <a href="create-order.html">Update</a> -
-                <a href="#">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Futon</td>
-              <td>Kitchen</td>
-              <td>Pending</td>
-              <td>22/05/2023</td>
-              <td>
-                <a href="create-order.html">Update</a> -
-                <a href="#">Delete</a>
-              </td>
-            </tr>
+            {% endif %}
           </tbody>
         </table>
       </div>

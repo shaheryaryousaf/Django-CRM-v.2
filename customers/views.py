@@ -55,8 +55,10 @@ def updateCustomer(request, id):
 # ===============================
 def customerDetail(request, id):
     customer = Customer.objects.get(id=id)
+    orders = customer.order_set.all()
     context = {
-        'customer': customer
+        'customer': customer,
+        'orders': orders,
     }
     return render(request, 'customers/customer-detail.html', context)
 

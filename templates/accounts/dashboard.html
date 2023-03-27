@@ -68,7 +68,7 @@
             {% for customer in customers %}
             <tr>
               <td><a href="{% url 'customer-detail' customer.id %}">{{customer.first_name}} {{customer.last_name}}</a></td>
-              <td>{{customer.num__order}}</td>
+              <td>{{customer.order_set.count}}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -107,7 +107,7 @@
                   <td>{{order.status}}</td>
                   <td>
                     <a href="{% url 'order-detail' order.id %}"><i class="fa-solid fa-eye"></i></a>&nbsp;&nbsp;
-                    <a href="#"><i class="fa-solid fa-trash"></i></a>
+                    <a href="{% url 'delete-order' order.id %}"><i class="fa-solid fa-trash"></i></a>
                   </td>
                 </tr>
               {% endfor %}

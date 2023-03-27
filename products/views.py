@@ -1,7 +1,35 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Product, Order
-from .forms import ProductForm, OrderForm
+from .models import Product, Order, Category
+from .forms import ProductForm, OrderForm, CategoryForm
+
+
+# ===============================
+# Categories List
+# ===============================
+def categories(request):
+    form = CategoryForm()
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('categories-list')
+    categories = Category.objects.all()
+    context = {
+        'categories': categories,
+        'form': form
+    }
+    return render(request, 'products/categories/categories.html', context)
+
+
+# ===============================
+# Delete Category
+# ===============================
+def deleteCategory(request, id):
+    category = Category.objects.get(id=id)
+    category.delete()
+    return redirect('categories-list')
+
 
 # ===============================
 # Products List
@@ -47,6 +75,15 @@ def editProduct(request, id):
         'form': form
     }
     return render(request, 'products/edit-product.html', context)
+
+
+# ===============================
+# Delete Product
+# ===============================
+def deleteProduct(request, id):
+    product = Product.objects.get(id=id)
+    product.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 # ===============================
@@ -114,3 +151,12 @@ def deliverOrder(request, id):
     order.status='Delivered'
     order.save()
     return redirect('orders-list')
+
+
+# ===============================
+# Delete Order
+# ===============================
+def deleteOrder(request, id):
+    order = Order.objects.get(id=id)
+    order.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

@@ -30,9 +30,14 @@
               <small>You can see list of all products here</small>
             </p>
           </div>
-          <a class="btn btn-primary btn-sm" href="{% url 'add-product' %}"
-            >Add New Product</a
-          >
+          <div>
+            <a class="btn btn-primary btn-sm" href="{% url 'categories-list' %}"
+              >Categories</a
+            >&nbsp;
+            <a class="btn btn-primary btn-sm" href="{% url 'add-product' %}"
+              >Add New Product</a
+            >
+          </div>
         </div>
         <form>
           <h5>Filters</h5>
@@ -75,7 +80,7 @@
                 <a href="{% url 'edit-product' product.id %}"
                   ><i class="fa-solid fa-pencil"></i></a
                 >&nbsp;&nbsp;
-                <a href="#"><i class="fa-solid fa-trash"></i></a>
+                <a href="{% url 'delete-product' product.id %}"><i class="fa-solid fa-trash"></i></a>
               </td>
             </tr>
             {% endfor %}
