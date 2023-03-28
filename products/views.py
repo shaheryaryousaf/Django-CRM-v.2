@@ -3,11 +3,13 @@ from django.contrib import messages
 from .models import Product, Order, Category
 from .forms import ProductForm, OrderForm, CategoryForm, SearchForm
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
 # ===============================
 # Categories List
 # ===============================
+@login_required(login_url='/account/signin')
 def categories(request):
     form = CategoryForm()
     if request.method == "POST":
@@ -35,6 +37,7 @@ def deleteCategory(request, id):
 # ===============================
 # Products List
 # ===============================
+@login_required(login_url='/account/signin')
 def products(request):
     products = Product.objects.all()
 
@@ -54,6 +57,7 @@ def products(request):
 # ===============================
 # Add Product
 # ===============================
+@login_required(login_url='/account/signin')
 def addProduct(request):
     form = ProductForm()
     if request.method == "POST":
@@ -71,6 +75,7 @@ def addProduct(request):
 # ===============================
 # Update Product
 # ===============================
+@login_required(login_url='/account/signin')
 def editProduct(request, id):
     products = Product.objects.get(id=id)
     form = ProductForm(instance=products)
@@ -89,6 +94,7 @@ def editProduct(request, id):
 # ===============================
 # Delete Product
 # ===============================
+@login_required(login_url='/account/signin')
 def deleteProduct(request, id):
     product = Product.objects.get(id=id)
     product.delete()
@@ -98,6 +104,7 @@ def deleteProduct(request, id):
 # ===============================
 # Orders List
 # ===============================
+@login_required(login_url='/account/signin')
 def Orders(request):
     orders = Order.objects.all()
     form = SearchForm(request.GET)
@@ -125,6 +132,7 @@ def Orders(request):
 # ===============================
 # Order Detail
 # ===============================
+@login_required(login_url='/account/signin')
 def orderDetail(request, id):
     order = Order.objects.get(id=id)
     context = {
@@ -136,6 +144,7 @@ def orderDetail(request, id):
 # ===============================
 # Create Order
 # ===============================
+@login_required(login_url='/account/signin')
 def createOrder(request):
     form = OrderForm()
     if request.method == "POST":
@@ -153,6 +162,7 @@ def createOrder(request):
 # ===============================
 # Update Order
 # ===============================
+@login_required(login_url='/account/signin')
 def updateOrder(request, id):
     order = Order.objects.get(id=id)
     form = OrderForm(instance=order)
@@ -171,6 +181,7 @@ def updateOrder(request, id):
 # ===============================
 # Deliver Order
 # ===============================
+@login_required(login_url='/account/signin')
 def deliverOrder(request, id):
     order = Order.objects.get(id=id)
     order.status='Delivered'
@@ -181,6 +192,7 @@ def deliverOrder(request, id):
 # ===============================
 # Delete Order
 # ===============================
+@login_required(login_url='/account/signin')
 def deleteOrder(request, id):
     order = Order.objects.get(id=id)
     order.delete()

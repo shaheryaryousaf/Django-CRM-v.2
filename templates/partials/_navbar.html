@@ -15,6 +15,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+        {% if request.user.is_authenticated %}
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
@@ -29,9 +30,16 @@
             <a class="nav-link" href="{% url 'products-list' %}">Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Login</a>
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>
         </ul>
+        {% else %}
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signin' %}">Login</a>
+          </li>
+        </ul>
+        {% endif %}
       </div>
     </div>
   </nav>

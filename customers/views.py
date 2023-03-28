@@ -5,10 +5,12 @@ from products.forms import SearchForm
 from products.forms import CustomerOrderForm
 from .models import Customer
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 # ===============================
 # Customers List
 # ===============================
+@login_required(login_url='/account/signin')
 def customers(request):
     customers = Customer.objects.all()
 
@@ -28,6 +30,7 @@ def customers(request):
 # ===============================
 # Add Customer
 # ===============================
+@login_required(login_url='/account/signin')
 def addCustomer(request):
     form = CustomerForm()
     if request.method == "POST":
@@ -45,6 +48,7 @@ def addCustomer(request):
 # ===============================
 # Update Customer
 # ===============================
+@login_required(login_url='/account/signin')
 def updateCustomer(request, id):
     customer = Customer.objects.get(id=id)
     form = CustomerForm(instance=customer)
@@ -63,6 +67,7 @@ def updateCustomer(request, id):
 # ===============================
 # Customer Detail
 # ===============================
+@login_required(login_url='/account/signin')
 def customerDetail(request, id):
     customer = Customer.objects.get(id=id)
     orders = customer.order_set.all()
@@ -93,6 +98,7 @@ def customerDetail(request, id):
 # ===============================
 # Add Customer Order
 # ===============================
+@login_required(login_url='/account/signin')
 def addCustomerOrder(request, id):
     customer = Customer.objects.get(id=id)
     form = CustomerOrderForm()
