@@ -22,31 +22,22 @@
       <!-- Customer Orders -->
       <div class="col-md-8">
         <h2 class="mb-1">Total Orders: 10</h2>
-        <form class="mt-3">
+        <form method="GET" class="search_form">
           <h5>Filters</h5>
           <div class="row g-3">
             <div class="col">
-              <select class="form-control">
-                <option>-- Select Product --</option>
-                <option>Product 1</option>
-                <option>Product 2</option>
-                <option>Product 3</option>
-              </select>
+              {{form.product|as_crispy_field}}
             </div>
             <div class="col">
-              <select class="form-control">
-                <option>-- Select Status --</option>
-                <option>Pending</option>
-                <option>Out for Delivery</option>
-                <option>Delivered</option>
-              </select>
+              {{form.status|as_crispy_field}}
             </div>
             <div class="col">
               <button class="btn btn-primary">Search</button>
+              <a href="{% url 'customer-detail' customer.id %}" class="btn btn-primary">Reset</a>
             </div>
           </div>
         </form>
-        <table class="table custom_table mt-3">
+        <table class="table custom_table">
           <thead>
             <tr>
               <th>Product</th>
@@ -56,8 +47,8 @@
             </tr>
           </thead>
           <tbody>
-            {% if orders %}
-            {% for order in orders %}
+            {% if page_obj %}
+            {% for order in page_obj %}
             <tr>
               <td>{{order.product.title}}</td>
               <td>{{order.status}}</td>
@@ -75,6 +66,52 @@
             {% endif %}
           </tbody>
         </table>
+        <!-- Pagination -->
+        {% if orders.count > 5 %}
+        <nav>
+          <ul class="pagination justify-content-end">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="?page=1{% if form.product.value %}&product={{ form.product.value }}{% endif %}{% if form.status.value %}&status={{ form.status.value }}{% endif %}"
+                >First</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="?page={{ page_obj.previous_page_number }}{% if form.product.value %}&product={{ form.product.value }}{% endif %}{% if form.status.value %}&status={{ form.status.value }}{% endif %}"
+                >Previous</a
+              >
+            </li>
+            {% endif %}
+
+            <li class="page-item active">
+              <span class="page-link">
+                {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+              </span>
+            </li>
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="?page={{ page_obj.next_page_number }}{% if form.product.value %}&product={{ form.product.value }}{% endif %}{% if form.status.value %}&status={{ form.status.value }}{% endif %}"
+                >Next</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="?page={{ page_obj.paginator.num_pages }}{% if form.product.value %}&product={{ form.product.value }}{% endif %}{% if form.status.value %}&status={{ form.status.value }}{% endif %}"
+                >Last</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+        {% endif %}
       </div>
     </div>
   </div>

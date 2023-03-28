@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Product, Order, Category
-from .forms import ProductForm, OrderForm, CategoryForm
+from .forms import ProductForm, OrderForm, CategoryForm, SearchForm
+from django.core.paginator import Paginator
 
 
 # ===============================
@@ -36,8 +37,16 @@ def deleteCategory(request, id):
 # ===============================
 def products(request):
     products = Product.objects.all()
+
+    paginator = Paginator(products,5)
+    page_number = request.GET.get('page')
+    if page_number and int(page_number) < 1:  # Check if page number is less than 1
+        page_number = 1
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'products': products
+        'products': products,
+        'page_obj': page_obj
     }
     return render(request, 'products/products.html', context)
 
@@ -91,8 +100,24 @@ def deleteProduct(request, id):
 # ===============================
 def Orders(request):
     orders = Order.objects.all()
+    form = SearchForm(request.GET)
+
+    if form.is_valid():
+        if form.cleaned_data['product']:
+            orders = orders.filter(product=form.cleaned_data['product'])
+        if form.cleaned_data['status']:
+            orders = orders.filter(status=form.cleaned_data['status'])
+
+    paginator = Paginator(orders,5)
+    page_number = request.GET.get('page')
+    if page_number and int(page_number) < 1:  # Check if page number is less than 1
+        page_number = 1
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'orders': orders
+        'orders': orders,
+        'page_obj': page_obj,
+        'form': form
     }
     return render(request, 'products/orders.html', context)
 

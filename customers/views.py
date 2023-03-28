@@ -1,16 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CustomerForm
+from products.forms import SearchForm
 from products.forms import CustomerOrderForm
 from .models import Customer
+from django.core.paginator import Paginator
 
 # ===============================
 # Customers List
 # ===============================
 def customers(request):
     customers = Customer.objects.all()
+
+    paginator = Paginator(customers,5)
+    page_number = request.GET.get('page')
+    if page_number and int(page_number) < 1:  # Check if page number is less than 1
+        page_number = 1
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'customers': customers
+        'customers': customers,
+        'page_obj': page_obj,
     }
     return render(request, 'customers/customers.html', context)
 
@@ -56,9 +66,26 @@ def updateCustomer(request, id):
 def customerDetail(request, id):
     customer = Customer.objects.get(id=id)
     orders = customer.order_set.all()
+
+    form = SearchForm(request.GET)
+
+    if form.is_valid():
+        if form.cleaned_data['product']:
+            orders = orders.filter(product=form.cleaned_data['product'])
+        if form.cleaned_data['status']:
+            orders = orders.filter(status=form.cleaned_data['status'])
+
+    paginator = Paginator(orders,5)
+    page_number = request.GET.get('page')
+    if page_number and int(page_number) < 1:  # Check if page number is less than 1
+        page_number = 1
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'customer': customer,
         'orders': orders,
+        'form': form,
+        'page_obj': page_obj
     }
     return render(request, 'customers/customer-detail.html', context)
 

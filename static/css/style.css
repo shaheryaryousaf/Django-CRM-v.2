@@ -35,6 +35,10 @@ label{
     margin-bottom: 5px;
 }
 
+.search_form label{
+    display: none !important;
+}
+
 /* Header */
 header .navbar{
     padding: 15px 0;
@@ -83,6 +87,7 @@ header a{
     color: gray;
 }
 
-.pagination a{
+.pagination a,
+.pagination .page-link{
     font-size: 14px;
 }
